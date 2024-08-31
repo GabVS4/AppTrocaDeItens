@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "367331330248",
+    "project_id": "app-troca-de-itens",
+    "storage_bucket": "app-troca-de-itens.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:367331330248:android:1e085ff6082c5fda227dfd",
+        "android_client_info": {
+          "package_name": "com.example.trocadeitens"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARqsDHKvDFAoDLWB7w_zTVg3bUwbsX7C0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
