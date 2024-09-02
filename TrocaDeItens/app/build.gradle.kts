@@ -44,6 +44,8 @@ dependencies {
     implementation ("com.firebaseui:firebase-ui-auth:7.2.0") // firebase auth
     implementation("com.google.firebase:firebase-firestore") // firebase firestore
     implementation("com.google.firebase:firebase-storage") // firebase storage
+    implementation ("com.github.bumptech.glide:glide:4.16.0") // Glide
+    implementation ("jp.wasabeef:glide-transformations:4.3.0") // Glide transformations
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
