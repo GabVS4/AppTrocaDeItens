@@ -13,6 +13,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.trocadeitens.EditProfileActivity
 import com.example.trocadeitens.LoginActivity
 import com.example.trocadeitens.R
 
@@ -43,9 +44,8 @@ class Profile : Fragment() {
 
         // Configura o botão de edição
         binding.btnEditUser.setOnClickListener {
-            val intent = Intent(requireActivity(), LoginActivity::class.java).apply {
-                putExtra("username", binding.nameView.text.toString())
-            }
+            // Redireciona para a EditProfileActivity ao clicar em "Editar"
+            val intent = Intent(requireActivity(), EditProfileActivity::class.java)
             startActivity(intent)
         }
 

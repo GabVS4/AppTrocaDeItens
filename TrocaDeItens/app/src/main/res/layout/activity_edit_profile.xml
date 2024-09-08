@@ -1,20 +1,22 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.Profile">
+    tools:context=".EditProfileActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/Perfil"
+            android:id="@+id/Editar_Perfil"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Perfil"
+            android:text="Editar Perfil"
             android:textColor="@color/black"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -30,7 +32,7 @@
             android:layout_marginTop="8dp"
             android:background="?android:attr/listDivider"
             android:backgroundTint="@color/black"
-            app:layout_constraintTop_toBottomOf="@id/Perfil"
+            app:layout_constraintTop_toBottomOf="@id/Editar_Perfil"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -43,7 +45,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="16dp" />
 
-        <TextView
+        <EditText
             android:id="@+id/nameView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -56,46 +58,64 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="8dp" />
 
-        <TextView
-            android:id="@+id/emailView"
+
+        <EditText
+            android:id="@+id/passwordView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/e_mail"
+            android:hint="@string/nova_senha"
+            android:inputType="textPassword"
             android:textColor="#1E1E1E"
             android:textSize="22sp"
             app:layout_constraintTop_toBottomOf="@id/nameView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="4dp" />
+            android:layout_marginTop="8dp" />
+
 
         <Button
-            android:id="@+id/btnEditUser"
-            android:layout_width="120dp"
+            android:id="@+id/btnConfirmChanges"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/yellow"
-            android:text="@string/editar"
+            android:text="@string/confirmar"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             app:cornerRadius="5sp"
-            app:layout_constraintTop_toBottomOf="@id/emailView"
+            app:layout_constraintTop_toBottomOf="@id/passwordView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="24dp" />
 
         <Button
-            android:id="@+id/btnLogout"
-            android:layout_width="120dp"
+            android:id="@+id/btnCancelChanges"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/red"
-            android:text="@string/sair"
+            android:text="@string/cancelar"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             app:cornerRadius="5sp"
-            app:layout_constraintTop_toBottomOf="@id/btnEditUser"
+            app:layout_constraintTop_toBottomOf="@id/btnConfirmChanges"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="16dp" />
 
+        <Button
+            android:id="@+id/btnDeletUser"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/black"
+            android:text="@string/deletar_usu_rio"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:cornerRadius="5sp"
+            app:layout_constraintTop_toBottomOf="@id/btnCancelChanges"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="16dp" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
