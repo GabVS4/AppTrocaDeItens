@@ -6,7 +6,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.example.trocadeitens.databinding.ActivityMainBinding
-import com.example.trocadeitens.fragments.AddBook
+import com.example.trocadeitens.fragments.AddItem
 import com.example.trocadeitens.fragments.Home
 import com.example.trocadeitens.fragments.Profile
 
@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.home -> replaceFragment(Home())
                 R.id.profile -> replaceFragment(Profile())
-                R.id.addBook -> replaceFragment(AddBook())
+                R.id.addItem -> replaceFragment(AddItem())
             }
             true
         }
