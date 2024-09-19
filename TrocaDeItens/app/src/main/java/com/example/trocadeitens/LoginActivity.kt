@@ -56,7 +56,7 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     Log.d(TAG, "signInWithEmail:success")
-                    val intent = Intent(this, MainActivity::class.java)
+                    val intent = Intent(this, ItemRegisterActivity::class.java)
                     val user = auth.currentUser
 
                     intent.putExtra("user", user)

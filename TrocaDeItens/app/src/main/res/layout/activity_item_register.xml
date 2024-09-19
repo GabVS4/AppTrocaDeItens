@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4F4F4"
+    tools:context=".ItemRegistrationActivity">
+
+    <!-- Título da tela -->
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Cadastro de Item"
+        android:textColor="@color/hint"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Campo para o nome do item -->
+    <EditText
+        android:id="@+id/edtItemName"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rounded_input"
+        android:hint="Nome do Item"
+        android:inputType="text"
+        android:paddingStart="16dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/hint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewTitle"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintWidth_percent="0.85" />
+
+    <!-- Campo para selecionar a categoria -->
+    <Spinner
+        android:id="@+id/spinnerCategory"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rounded_input"
+        android:paddingStart="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edtItemName"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintWidth_percent="0.85" />
+
+    <!-- Checkbox para visibilidade -->
+    <CheckBox
+        android:id="@+id/checkboxVisibility"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Visível"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/spinnerCategory"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Imagem do item selecionada/tirada -->
+    <ImageView
+        android:id="@+id/imgItem"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="Imagem do Item"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_launcher_background"
+        app:layout_constraintTop_toBottomOf="@id/checkboxVisibility"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Botão para escolher imagem da galeria -->
+    <Button
+        android:id="@+id/btnChooseFromGallery"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/yellow"
+        android:text="Escolher da Galeria"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        app:cornerRadius="5sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imgItem"
+        app:layout_constraintWidth_percent="0.85" />
+
+    <!-- Botão para tirar foto com a câmera -->
+    <Button
+        android:id="@+id/btnTakePhoto"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/yellow"
+        android:text="Tirar Foto"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        app:cornerRadius="5sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnChooseFromGallery"
+        app:layout_constraintWidth_percent="0.85" />
+
+    <!-- Botão para cadastrar o item -->
+    <Button
+        android:id="@+id/btnRegisterItem"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/yellow"
+        android:text="Cadastrar Item"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        app:cornerRadius="5sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnTakePhoto"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintWidth_percent="0.85" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

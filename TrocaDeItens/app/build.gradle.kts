@@ -27,31 +27,40 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
     buildFeatures {
         viewBinding = true
     }
 }
 
 dependencies {
-    implementation(platform("com.google.firebase:firebase-bom:33.2.0")) // firebase BoM
-    implementation ("com.firebaseui:firebase-ui-auth:7.2.0") // firebase auth
-    implementation("com.google.firebase:firebase-firestore") // firebase firestore
-    implementation("com.google.firebase:firebase-storage") // firebase storage
-    implementation ("com.github.bumptech.glide:glide:4.16.0") // Glide
-    implementation ("jp.wasabeef:glide-transformations:4.3.0") // Glide transformations
+    implementation(platform("com.google.firebase:firebase-bom:33.2.0")) // Firebase BoM
 
+    // Firebase libraries
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-firestore")
+    implementation("com.google.firebase:firebase-storage")
+
+    // Firebase UI
+    implementation("com.firebaseui:firebase-ui-auth:7.2.0")
+
+    // AndroidX libraries
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+
+    // Testing libraries
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
