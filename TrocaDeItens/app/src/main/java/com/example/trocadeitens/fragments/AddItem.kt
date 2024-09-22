@@ -47,6 +47,11 @@ class AddItem : Fragment() {
         descriptionEditText = view.findViewById(R.id.descriptionEditText)
         addItemButton = view.findViewById(R.id.addItemButton)
 
+        val categories = arrayOf("Categoria 1", "Categoria 2", "Categoria 3")
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categories)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        categorySpinner.adapter = adapter
+
         itemImageView.setOnClickListener {
             pickImageLauncher.launch("image/*")
         }
