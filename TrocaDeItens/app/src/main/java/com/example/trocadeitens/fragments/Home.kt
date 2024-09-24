@@ -63,9 +63,9 @@ class Home : Fragment() {
     }
 
     private fun setupSpinner() {
-        val filterOptions = arrayOf("Itens desejado", "Itens para trocar", "Itens isponíveis")
+        val filterOptions = arrayOf("Itens desejados", "Itens para trocar", "Itens disponíveis")
 
-        val adapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, filterOptions)
+        val adapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_dropdown_item, filterOptions)
         adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
 
         val spinner = binding.spinner
@@ -73,14 +73,25 @@ class Home : Fragment() {
     }
 
 
-    private fun filterItems(query: String, category: String) {
+    private fun filterItems(query: String, type: String) {
+        // Tradução do tipo para corresponder ao banco de dados
+        val translatedType = when (type) {
+            "Itens desejados" -> "Item desejado"
+            "Itens para trocar" -> "Item para troca"
+            "Itens disponíveis" -> "Item disponível"
+            else -> ""
+        }
+
         val filteredItems = allItems.filter { item ->
             val matchesQuery = item["name"]?.toString()?.contains(query, ignoreCase = true) ?: false
-            val matchesCategory = category == "Trocar" || item["category"]?.toString() == category
-            matchesQuery && matchesCategory
+            val matchesType = item["type"]?.toString() == translatedType
+            matchesQuery && matchesType
         }
+
+        // Atualiza o RecyclerView com os itens filtrados
         setupRecyclerView(filteredItems)
     }
+
 
     private fun setupRecyclerView(items: List<Map<String, Any>>) {
         binding.recyclerView.layoutManager = LinearLayoutManager(context)

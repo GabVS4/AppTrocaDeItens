@@ -26,8 +26,8 @@ class ItensAdapter(private val itens: List<Map<String, Any>>, private val onItem
 
     override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
         val item = itens[position]
-        holder.itemName.text = item["itemName"] as? String ?: "Unknown Name"
-        holder.itemDesc.text = item["itemDesc"] as? String ?: "Unknown Description"
+        holder.itemName.text = item["name"] as? String ?: "Unknown Name"
+        holder.itemDesc.text = item["description"] as? String ?: "Unknown Description"
         holder.categoryTag.text = item["category"] as? String ?: "None"
 
         // Carregar a imagem usando Glide
