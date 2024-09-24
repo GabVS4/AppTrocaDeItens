@@ -1,6 +1,5 @@
 package com.example.trocadeitens.fragments
 
-import android.R
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,21 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-//import com.example.trocadeitens.ARG_PARAM1
-//import com.example.trocadeitens.ARG_PARAM2
 import com.example.trocadeitens.adapters.ItensAdapter
 import com.example.trocadeitens.databinding.FragmentHomeBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-/**
- * A simple [Fragment] subclass.
- * Use the [Home.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class Home : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
@@ -47,8 +39,15 @@ class Home : Fragment() {
             if (items != null) {
                 setupRecyclerView(items)
             } else {
-                Log.w(TAG, "No books to display.")
+                Log.w(TAG, "No items to display.")
             }
+        }
+
+        // Configurando botão de pesquisa
+        binding.btnSearch.setOnClickListener {
+            val query = binding.edtSearch.text.toString()
+            val selectedType = binding.spinner.selectedItem.toString()
+            filterItems(query, selectedType)
         }
 
         binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -56,26 +55,22 @@ class Home : Fragment() {
                 filterItems(binding.edtSearch.text.toString(), parent?.getItemAtPosition(position).toString())
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Handle case where no filter is selected if necessary
-            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
     }
 
     private fun setupSpinner() {
         val filterOptions = arrayOf("Itens desejados", "Itens para trocar", "Itens disponíveis")
 
-        val adapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_dropdown_item, filterOptions)
-        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, filterOptions)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         val spinner = binding.spinner
         spinner.adapter = adapter
     }
 
-
-    private fun filterItems(query: String, type: String) {
-        // Tradução do tipo para corresponder ao banco de dados
-        val translatedType = when (type) {
+    private fun filterItems(query: String, selectedType: String) {
+        val translatedType = when (selectedType) {
             "Itens desejados" -> "Item desejado"
             "Itens para trocar" -> "Item para troca"
             "Itens disponíveis" -> "Item disponível"
@@ -83,22 +78,23 @@ class Home : Fragment() {
         }
 
         val filteredItems = allItems.filter { item ->
-            val matchesQuery = item["name"]?.toString()?.contains(query, ignoreCase = true) ?: false
-            val matchesType = item["type"]?.toString() == translatedType
+            val itemName = item["name"]?.toString() ?: ""
+            val itemType = item["type"]?.toString() ?: ""
+            val itemCategory = item["category"]?.toString() ?: "" // Adicione esta linha
+
+            val matchesQuery = itemName.contains(query, ignoreCase = true) || itemCategory.contains(query, ignoreCase = true) // Verifique também a categoria
+            val matchesType = itemType == translatedType || translatedType.isEmpty()
+
             matchesQuery && matchesType
         }
 
-        // Atualiza o RecyclerView com os itens filtrados
         setupRecyclerView(filteredItems)
     }
-
 
     private fun setupRecyclerView(items: List<Map<String, Any>>) {
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
         binding.recyclerView.adapter = ItensAdapter(items) { item ->
             // Handle item click
-            // val intent = Intent(context, BookInterface::class.java)
-            // startActivity(intent)
         }
     }
 
@@ -113,30 +109,25 @@ class Home : Fragment() {
             return
         }
 
-        try {
-            db.collection("users").document(user.uid).collection("items").get()
-                .addOnSuccessListener { querySnapshot ->
-                    if (!querySnapshot.isEmpty) {
-                        val items = querySnapshot.documents.map { document ->
-                            val item = document.data?.toMutableMap() ?: mutableMapOf()
-                            item["id"] = document.id
-                            item
-                        }
-                        allItems = items
-                        callback(items)
-                    } else {
-                        Log.d(TAG, "No items found.")
-                        callback(null)
+        db.collection("users").document(user.uid).collection("items").get()
+            .addOnSuccessListener { querySnapshot ->
+                if (!querySnapshot.isEmpty) {
+                    val items = querySnapshot.documents.map { document ->
+                        val item = document.data?.toMutableMap() ?: mutableMapOf()
+                        item["id"] = document.id
+                        item
                     }
-                }
-                .addOnFailureListener { exception ->
-                    Log.d(TAG, "get failed with ", exception)
+                    allItems = items
+                    callback(items)
+                } else {
+                    Log.d(TAG, "No items found.")
                     callback(null)
                 }
-        } catch (e: Exception) {
-            Log.e(TAG, "Error fetching books", e)
-            callback(null)
-        }
+            }
+            .addOnFailureListener { exception ->
+                Log.d(TAG, "get failed with ", exception)
+                callback(null)
+            }
     }
 
     override fun onDestroyView() {
