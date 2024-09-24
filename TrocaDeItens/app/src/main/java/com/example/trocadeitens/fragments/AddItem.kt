@@ -12,6 +12,7 @@ import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.example.trocadeitens.R
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.storage.ktx.storage
@@ -86,6 +87,14 @@ class AddItem : Fragment() {
             return
         }
 
+        val user = FirebaseAuth.getInstance().currentUser
+        val uid = user?.uid
+
+        if (uid == null) {
+            Toast.makeText(context, "Usuário não autenticado", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         val firestore = Firebase.firestore
         val itemId = UUID.randomUUID().toString()
 
@@ -93,17 +102,17 @@ class AddItem : Fragment() {
             val storageReference = Firebase.storage.reference.child("item_images/$itemId")
             storageReference.putFile(itemImageUri!!).addOnSuccessListener {
                 storageReference.downloadUrl.addOnSuccessListener { uri ->
-                    saveItemToFirestore(itemId, itemName, category, type, visibility, description, uri.toString())
+                    saveItemToFirestore(uid, itemId, itemName, category, type, visibility, description, uri.toString())
                 }
             }.addOnFailureListener {
                 Toast.makeText(context, "Falha ao fazer upload da imagem", Toast.LENGTH_SHORT).show()
             }
         } else {
-            saveItemToFirestore(itemId, itemName, category, type, visibility, description, null)
+            saveItemToFirestore(uid, itemId, itemName, category, type, visibility, description, null)
         }
     }
 
-    private fun saveItemToFirestore(itemId: String, itemName: String, category: String, type: String, visibility: String, description: String, imageUrl: String?) {
+    private fun saveItemToFirestore(uid: String, itemId: String, itemName: String, category: String, type: String, visibility: String, description: String, imageUrl: String?) {
         val item = hashMapOf(
             "id" to itemId,
             "name" to itemName,
@@ -111,10 +120,11 @@ class AddItem : Fragment() {
             "type" to type,
             "visibility" to visibility,
             "description" to description,
-            "imageUrl" to imageUrl
+            "imageUrl" to imageUrl,
+            "userId" to uid
         )
 
-        Firebase.firestore.collection("items").document(itemId).set(item)
+        Firebase.firestore.collection("users").document(uid).collection("items").document(itemId).set(item)
             .addOnSuccessListener {
                 Toast.makeText(context, "Item adicionado com sucesso", Toast.LENGTH_SHORT).show()
                 // Limpar campos após adicionar
