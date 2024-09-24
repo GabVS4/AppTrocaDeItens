@@ -47,8 +47,8 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
-            android:layout_width="413dp"
-            android:layout_height="600dp"
+            android:layout_width="match_parent"
+            android:layout_height="569dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -58,9 +58,10 @@
 
         <Spinner
             android:id="@+id/spinner"
-            android:layout_width="350dp"
-            android:layout_height="40dp"
-            app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+            android:layout_width="329dp"
+            android:layout_height="60sp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_input"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edtSearch" />

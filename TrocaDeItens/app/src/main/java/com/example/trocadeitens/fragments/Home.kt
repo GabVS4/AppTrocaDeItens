@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 //import com.example.trocadeitens.ARG_PARAM1
@@ -17,7 +18,6 @@ import com.example.trocadeitens.databinding.FragmentHomeBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-
 /**
  * A simple [Fragment] subclass.
  * Use the [Home.newInstance] factory method to
@@ -43,7 +43,6 @@ class Home : Fragment() {
 
         setupSpinner()
 
-        // Set up RecyclerView
         getAllItems { items ->
             if (items != null) {
                 setupRecyclerView(items)
@@ -64,10 +63,15 @@ class Home : Fragment() {
     }
 
     private fun setupSpinner() {
-        val filterOptions = arrayOf("All", "Trocar", "Desejado") // Add your filter options here
+        val filterOptions = arrayOf("Itens desejado", "Itens para trocar", "Itens isponíveis")
+
         val adapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, filterOptions)
-        binding.spinner.adapter = adapter
+        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+
+        val spinner = binding.spinner
+        spinner.adapter = adapter
     }
+
 
     private fun filterItems(query: String, category: String) {
         val filteredItems = allItems.filter { item ->
