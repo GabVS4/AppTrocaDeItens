@@ -131,7 +131,7 @@ class AddItem : Fragment() {
             "userEmail" to userEmail
         )
 
-        Firebase.firestore.collection("users").document(uid).collection("items").document(itemId).set(item)
+        Firebase.firestore.collection("items").add(item)
             .addOnSuccessListener {
                 Toast.makeText(context, "Item adicionado com sucesso", Toast.LENGTH_SHORT).show()
                 // Limpar campos após adicionar

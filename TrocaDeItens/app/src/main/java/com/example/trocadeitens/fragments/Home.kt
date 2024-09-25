@@ -82,16 +82,18 @@ class Home : Fragment() {
         val filteredItems = allItems.filter { item ->
             val itemName = item["name"]?.toString() ?: ""
             val itemType = item["type"]?.toString() ?: ""
-            val itemCategory = item["category"]?.toString() ?: "" // Adicione esta linha
+            val itemCategory = item["category"]?.toString() ?: ""
+            val itemVisibility = item["visibility"]?.toString()?.lowercase() ?: "public"
 
-            val matchesQuery = itemName.contains(query, ignoreCase = true) || itemCategory.contains(query, ignoreCase = true) // Verifique também a categoria
+            val matchesQuery = itemName.contains(query, ignoreCase = true) || itemCategory.contains(query, ignoreCase = true)
             val matchesType = itemType == translatedType || translatedType.isEmpty()
 
-            matchesQuery && matchesType
+            matchesQuery && matchesType && itemVisibility != "private"
         }
 
         setupRecyclerView(filteredItems)
     }
+
 
     private fun setupRecyclerView(items: List<Map<String, Any>>) {
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
@@ -120,12 +122,19 @@ class Home : Fragment() {
             return
         }
 
-        db.collection("users").document(user.uid).collection("items").get()
+        db.collection("items").get()
             .addOnSuccessListener { querySnapshot ->
                 if (!querySnapshot.isEmpty) {
-                    val items = querySnapshot.documents.map { document ->
-                        val item = document.data?.toMutableMap() ?: mutableMapOf()
+                    val items = querySnapshot.documents.mapNotNull { document ->
+                        val item = document.data?.toMutableMap() ?: return@mapNotNull null
                         item["id"] = document.id
+
+                        // Filtrar itens privados
+                        val itemVisibility = item["visibility"]?.toString() ?: "public"
+                        if (itemVisibility == "private") {
+                            return@mapNotNull null
+                        }
+
                         item
                     }
                     allItems = items
