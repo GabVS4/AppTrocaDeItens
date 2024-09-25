@@ -1,5 +1,6 @@
 package com.example.trocadeitens.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.trocadeitens.ItemInterfaceActivity
 import com.example.trocadeitens.adapters.ItensAdapter
 import com.example.trocadeitens.databinding.FragmentHomeBinding
 import com.google.firebase.auth.ktx.auth
@@ -60,7 +62,7 @@ class Home : Fragment() {
     }
 
     private fun setupSpinner() {
-        val filterOptions = arrayOf("Itens desejados", "Itens para trocar", "Itens disponíveis")
+        val filterOptions = arrayOf("Itens desejados", "Itens para trocar", "Itens disponíveis", "Meus itens")
 
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, filterOptions)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -94,7 +96,16 @@ class Home : Fragment() {
     private fun setupRecyclerView(items: List<Map<String, Any>>) {
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
         binding.recyclerView.adapter = ItensAdapter(items) { item ->
-            // Handle item click
+            val intent = Intent(context, ItemInterfaceActivity::class.java)
+
+            intent.putExtra("itemName", item["name"].toString())
+            intent.putExtra("itemCategory", item["category"].toString())
+            intent.putExtra("itemType", item["type"].toString())
+            intent.putExtra("userEmail", item["userEmail"].toString())
+            intent.putExtra("itemDescription", item["description"].toString())
+            intent.putExtra("imageUrl", item["imageUrl"].toString())
+
+            startActivity(intent)
         }
     }
 

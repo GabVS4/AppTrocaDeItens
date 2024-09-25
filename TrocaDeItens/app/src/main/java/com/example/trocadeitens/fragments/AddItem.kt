@@ -89,8 +89,14 @@ class AddItem : Fragment() {
 
         val user = FirebaseAuth.getInstance().currentUser
         val uid = user?.uid
+        val userEmail = user?.email
 
         if (uid == null) {
+            Toast.makeText(context, "Usuário não autenticado", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (userEmail == null) {
             Toast.makeText(context, "Usuário não autenticado", Toast.LENGTH_SHORT).show()
             return
         }
@@ -102,17 +108,17 @@ class AddItem : Fragment() {
             val storageReference = Firebase.storage.reference.child("item_images/$itemId")
             storageReference.putFile(itemImageUri!!).addOnSuccessListener {
                 storageReference.downloadUrl.addOnSuccessListener { uri ->
-                    saveItemToFirestore(uid, itemId, itemName, category, type, visibility, description, uri.toString())
+                    saveItemToFirestore(uid, itemId, itemName, category, type, visibility, description, userEmail, uri.toString())
                 }
             }.addOnFailureListener {
                 Toast.makeText(context, "Falha ao fazer upload da imagem", Toast.LENGTH_SHORT).show()
             }
         } else {
-            saveItemToFirestore(uid, itemId, itemName, category, type, visibility, description, null)
+            saveItemToFirestore(uid, itemId, itemName, category, type, visibility, description, userEmail, null)
         }
     }
 
-    private fun saveItemToFirestore(uid: String, itemId: String, itemName: String, category: String, type: String, visibility: String, description: String, imageUrl: String?) {
+    private fun saveItemToFirestore(uid: String, itemId: String, itemName: String, category: String, type: String, visibility: String, description: String, userEmail: String, imageUrl: String?) {
         val item = hashMapOf(
             "id" to itemId,
             "name" to itemName,
@@ -121,7 +127,8 @@ class AddItem : Fragment() {
             "visibility" to visibility,
             "description" to description,
             "imageUrl" to imageUrl,
-            "userId" to uid
+            "userId" to uid,
+            "userEmail" to userEmail
         )
 
         Firebase.firestore.collection("users").document(uid).collection("items").document(itemId).set(item)
