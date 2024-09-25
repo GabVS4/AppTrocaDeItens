@@ -22,17 +22,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Imagem do item -->
-    <ImageView
-        android:id="@+id/imgViewItem"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="16dp"
-        android:contentDescription="Imagem do Item"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_launcher_background"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewTitle" />
 
     <!-- Nome do item -->
 
@@ -46,6 +35,21 @@
     <!-- Botão para voltar -->
 
     <!-- Email do interessado -->
+
+    <ImageView
+        android:id="@+id/imgViewItem"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="Imagem do Item"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_launcher_background"
+        app:layout_constraintBottom_toTopOf="@+id/txtItemName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewTitle"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/txtItemName"
